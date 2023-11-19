@@ -19,9 +19,9 @@ def main():
         print("error")
 if __name__ =="__main__":
     main()
-spark_session = SparkSession.builder.master("local").appName("article").getOrCreate()
+#spark_session = SparkSession.builder.master("local").appName("article").getOrCreate()
 
-health_twitter = spark_session.sparkContext.textFile("./health_twitter/*.txt")
+#health_twitter = spark_session.sparkContext.textFile("./health_twitter/*.txt")
 # bbchealth = spark_session.sparkContext.textFile("./health_twitter/bbchealth.txt")
 # cbchealth = spark_session.sparkContext.textFile("./health_twitter/cbchealth.txt")
 # cnnhealth = spark_session.sparkContext.textFile("./health_twitter/cnnhealth.txt")
@@ -77,62 +77,62 @@ def wordcounts(x):
         
 
 
-health_twit2011, health_twit2012, health_twit2013, health_twit2014, health_twit2015 =wordcounts(health_twitter)
+# health_twit2011, health_twit2012, health_twit2013, health_twit2014, health_twit2015 =wordcounts(health_twitter)
 
-health_twit2011_top20words = dict(health_twit2011.take(20))
-health_twit2012_top20words = dict(health_twit2012.take(20))
-health_twit2013_top20words = dict(health_twit2013.take(20))
-health_twit2014_top20words = dict(health_twit2014.take(20))
-health_twit2015_top20words = dict(health_twit2015.take(20))
+# health_twit2011_top20words = dict(health_twit2011.take(20))
+# health_twit2012_top20words = dict(health_twit2012.take(20))
+# health_twit2013_top20words = dict(health_twit2013.take(20))
+# health_twit2014_top20words = dict(health_twit2014.take(20))
+# health_twit2015_top20words = dict(health_twit2015.take(20))
 
-print(health_twit2011_top20words)
-print(health_twit2012_top20words)
-print(health_twit2013_top20words)
-print(health_twit2014_top20words)
-print(health_twit2015_top20words)
+# print(health_twit2011_top20words)
+# print(health_twit2012_top20words)
+# print(health_twit2013_top20words)
+# print(health_twit2014_top20words)
+# print(health_twit2015_top20words)
 
-justwords_2011 = []
-justwords_2012 = []
-justwords_2013 = []
-justwords_2014 = []
-justwords_2015 = []
+# justwords_2011 = []
+# justwords_2012 = []
+# justwords_2013 = []
+# justwords_2014 = []
+# justwords_2015 = []
 
-for wordsandcounts in health_twit2011_top20words.keys():
-    justwords_2011.append(wordsandcounts)
-for wordsandcounts in health_twit2012_top20words.keys():
-    justwords_2012.append(wordsandcounts)
-for wordsandcounts in health_twit2013_top20words.keys():
-    justwords_2013.append(wordsandcounts)
-for wordsandcounts in health_twit2014_top20words.keys():
-    justwords_2014.append(wordsandcounts)
-for wordsandcounts in health_twit2015_top20words.keys():
-    justwords_2015.append(wordsandcounts)
-print(" 2011 The top 20 words are : " + str(justwords_2011))
-print(" 2012 The top 20 words are : " + str(justwords_2012))
-print(" 2013 The top 20 words are : " + str(justwords_2013))
-print(" 2014 The top 20 words are : " + str(justwords_2014))
-print(" 2015 The top 20 words are : " + str(justwords_2015))
+# for wordsandcounts in health_twit2011_top20words.keys():
+#     justwords_2011.append(wordsandcounts)
+# for wordsandcounts in health_twit2012_top20words.keys():
+#     justwords_2012.append(wordsandcounts)
+# for wordsandcounts in health_twit2013_top20words.keys():
+#     justwords_2013.append(wordsandcounts)
+# for wordsandcounts in health_twit2014_top20words.keys():
+#     justwords_2014.append(wordsandcounts)
+# for wordsandcounts in health_twit2015_top20words.keys():
+#     justwords_2015.append(wordsandcounts)
+# print(" 2011 The top 20 words are : " + str(justwords_2011))
+# print(" 2012 The top 20 words are : " + str(justwords_2012))
+# print(" 2013 The top 20 words are : " + str(justwords_2013))
+# print(" 2014 The top 20 words are : " + str(justwords_2014))
+# print(" 2015 The top 20 words are : " + str(justwords_2015))
 
-#plt.rc('font', family='NanumGothic')
-path = './font/NanumGothic.ttf'
-wc = WordCloud(font_path = path,
-               background_color='white',
-               width=1000,
-               height=1000,
-               max_font_size=300)
+# #plt.rc('font', family='NanumGothic')
+# path = './font/NanumGothic.ttf'
+# wc = WordCloud(font_path = path,
+#                background_color='white',
+#                width=1000,
+#                height=1000,
+#                max_font_size=300)
 
-dict_list = [health_twit2011_top20words,health_twit2012_top20words,health_twit2013_top20words,health_twit2014_top20words,health_twit2015_top20words]
-title_list = [2011,2012,2013,2014,2015]
+# dict_list = [health_twit2011_top20words,health_twit2012_top20words,health_twit2013_top20words,health_twit2014_top20words,health_twit2015_top20words]
+# title_list = [2011,2012,2013,2014,2015]
 
-fig = plt.figure(figsize=(25,20))
-for i in range(len(dict_list)):
-    wc.generate_from_frequencies(dict_list[i]) #워드클라우드 생성
-    ax = fig.add_subplot(2,3,i+1)
-    ax.imshow(wc, interpolation='bilinear')
-    ax.set_xlabel(f'{title_list[i]}') #그래프 제목 출력
-    ax.set_xticks([]), ax.set_yticks([]) #x축, y축을 없앰
-    plt.imshow(wc, interpolation='bilinear')
+# fig = plt.figure(figsize=(25,20))
+# for i in range(len(dict_list)):
+#     wc.generate_from_frequencies(dict_list[i]) #워드클라우드 생성
+#     ax = fig.add_subplot(2,3,i+1)
+#     ax.imshow(wc, interpolation='bilinear')
+#     ax.set_xlabel(f'{title_list[i]}') #그래프 제목 출력
+#     ax.set_xticks([]), ax.set_yticks([]) #x축, y축을 없앰
+#     plt.imshow(wc, interpolation='bilinear')
 
-fig.suptitle('twitter health news top keyword')
-fig.tight_layout()
-plt.show()
+# fig.suptitle('twitter health news top keyword')
+# fig.tight_layout()
+# plt.show()
