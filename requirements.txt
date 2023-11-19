@@ -81,8 +81,7 @@ jupyterlab-git==0.41.0
 jupyterlab-pygments==0.2.2
 jupyterlab_server==2.25.0
 jupyterlab-widgets==3.0.9
-libmambapy==1.5.1
-llvmlite==0.40.1
+llvmlite
 locket==1.0.0
 lz4==4.3.2
 Mako==1.2.4
