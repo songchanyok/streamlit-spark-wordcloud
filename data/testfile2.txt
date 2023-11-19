@@ -1,0 +1,7 @@
+pairRDD = sc.parallelize( [('panda', 0), ('pink', 3), ('pirate', 3), ('panda', 1), ('pink', 4)] )
+result1 = pairRDD.groupByKey()
+result2 = result1.map(lambda x : (x[0], len(x[1])))
+result3 = result1.map(lambda x : (x[0], list(x[1])))
+
+print(result2.collect())
+print(result3.collect())

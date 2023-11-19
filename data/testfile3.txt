@@ -1,0 +1,7 @@
+sc = SparkContext(conf=conf)
+
+pairRDD1 = sc.parallelize( [('panda', 0), ('pink', 3)])
+pairRDD2 = sc.parallelize( [('pirate', 3), ('panda', 1), ('pink', 4)] )
+result1 = pairRDD1.cogroup(pairRDD2)
+
+print(result1.collect())

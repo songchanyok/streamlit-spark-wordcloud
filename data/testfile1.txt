@@ -1,0 +1,4 @@
+seokil, 50
+seokil, 60
+gildong, 60
+gildong, 80
