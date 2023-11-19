@@ -3,6 +3,22 @@ from pyspark.sql import SparkSession
 import matplotlib.pyplot as plt
 
 from wordcloud import WordCloud
+
+import streamlit as st
+from streamlit_option_menu import option_menu
+
+def main():
+    with st.sidebar:
+        selected = option_menu("대시보드 메뉴",['홈','워드클라우드'], icons=['house','file-bar-graph'], 
+                               menu_icon="cast",default_index=0)
+    if selected=="홈":
+        st.title('대시보드 개요')
+    elif selected =="워드클라우드":
+        pass
+    else:
+        print("error")
+if __name__ =="__main__":
+    main()
 spark_session = SparkSession.builder.master("local").appName("article").getOrCreate()
 
 health_twitter = spark_session.sparkContext.textFile("./health_twitter/*.txt")
