@@ -102,4 +102,3 @@ def run_wordcloud():
     fig.tight_layout()
     #plt.show()
     st.pyplot(fig)
-    st.plotly_chart(fig)
