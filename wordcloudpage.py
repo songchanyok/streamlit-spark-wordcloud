@@ -76,7 +76,7 @@ def run_wordcloud():
     health_twit2014_top20words = dict(rdd_2014_rank.take(20))
     health_twit2015_top20words = dict(rdd_2015_rank.take(20))
     
-    st.makrdown("## 대시보드 개요 \n"
+    st.markdown("## 대시보드 개요 \n"
                 "본 프로젝트는 트위터 뉴스기사의 top keywords 들을 wordcloud 형태로 보여주는 대시보드입니다.")
     # #plt.rc('font', family='NanumGothic')
     path = './font/NanumGothic.ttf'
