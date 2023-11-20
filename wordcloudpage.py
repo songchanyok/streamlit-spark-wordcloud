@@ -9,8 +9,14 @@ import streamlit as st
 
 spark_session = SparkSession.builder.master("local").appName("article").getOrCreate()
 
-@st.cache_data
-def load_data():
+# @st.cache_data
+# def load_data():
+
+
+# def wordcounts(x): 
+
+
+def run_wordcloud():
     #health_twitter = spark_session.sparkContext.textFile("./health_twitter/*.txt")
     bbchealth = spark_session.sparkContext.textFile("./health_twitter/bbchealth.txt")
     cbchealth = spark_session.sparkContext.textFile("./health_twitter/cbchealth.txt")
@@ -25,10 +31,7 @@ def load_data():
     usnewshealth = spark_session.sparkContext.textFile("./health_twitter/usnewshealth.txt")
     health_twitter = bbchealth.union(cbchealth).union(cnnhealth).union(everydayhealth).union(gdnhealthcare).union(goodhealth).union(latimeshealth).union(nprhealth).union(nytimeshealth).union(reuters_health).union(usnewshealth)
 
-    return health_twitter
-
-def wordcounts(x): 
-    rdd=x.filter(lambda line: len(line) > 0) \
+    rdd=health_twitter.filter(lambda line: len(line) > 0) \
         .map(lambda x: x.split('|')).map(lambda x: (x[1].split(' ')[-1],x[2])) \
         .map(lambda x: (x[0],re.split('\W+',x[1]))) \
         .map(lambda x: (x[0],[n.lower() for n in x[1]])) \
@@ -66,21 +69,15 @@ def wordcounts(x):
     rdd_2015_rank=rdd_2015.flatMap(lambda x: x[1]) \
                             .reduceByKey(lambda x,y:x+y) \
                             .sortBy(lambda x: x[1], ascending=False) 
-    
-    return rdd_2011_rank, rdd_2012_rank, rdd_2013_rank, rdd_2014_rank, rdd_2015_rank  
 
-def run_wordcloud():
-    total_data = load_data()
+    health_twit2011_top20words = dict(rdd_2011_rank.take(20))
+    health_twit2012_top20words = dict(rdd_2012_rank.take(20))
+    health_twit2013_top20words = dict(rdd_2013_rank.take(20))
+    health_twit2014_top20words = dict(rdd_2014_rank.take(20))
+    health_twit2015_top20words = dict(rdd_2015_rank.take(20))
+    
     st.makrdown("## 대시보드 개요 \n"
                 "본 프로젝트는 트위터 뉴스기사의 top keywords 들을 wordcloud 형태로 보여주는 대시보드입니다.")
-    health_twit2011, health_twit2012, health_twit2013, health_twit2014, health_twit2015 =wordcounts(total_data)
-
-    health_twit2011_top20words = dict(health_twit2011.take(20))
-    health_twit2012_top20words = dict(health_twit2012.take(20))
-    health_twit2013_top20words = dict(health_twit2013.take(20))
-    health_twit2014_top20words = dict(health_twit2014.take(20))
-    health_twit2015_top20words = dict(health_twit2015.take(20))
-    
     # #plt.rc('font', family='NanumGothic')
     path = './font/NanumGothic.ttf'
     wc = WordCloud(font_path = path,
