@@ -1,7 +1,6 @@
 import sys, re
 from pyspark.sql import SparkSession
 import matplotlib.pyplot as plt
-import pandas as pd
 
 from wordcloud import WordCloud
 
